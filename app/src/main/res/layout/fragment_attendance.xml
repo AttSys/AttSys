@@ -1,15 +1,38 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.uniben.attsys.AttendanceFragment">
+    tools:context="com.uniben.attsys.fragments.AttendanceFragment">
+
+    <FrameLayout
+        android:id="@+id/attendance_indicator_card"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+       android:layout_margin="8dp"
+        android:elevation="8dp"
+        android:background="#7F6E035D"
+        tools:layout_editor_absoluteY="4dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Attendance Ongoing"
+            android:textColor="#fff"
+            android:textStyle="bold" />
+    </FrameLayout>
 
     <include
+        android:layout_below="@+id/attendance_indicator_card"
         layout="@layout/empty_state_view_no_attendance"
-        android:visibility="gone"/>
-    <include
-        layout="@layout/attendance_ongoing"
+        android:visibility="gone"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent" />
+    <com.uniben.attsys.views.EmptyRecyclerView
+        android:layout_below="@+id/attendance_indicator_card"
+        android:id="@+id/rv_attedance"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/attendance_ongoing"/>
 
-        />
-
-</FrameLayout>
+</RelativeLayout>

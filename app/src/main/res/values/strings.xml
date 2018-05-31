@@ -6,4 +6,37 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="dummy_desc">This course analyzes the flow of electrical energy along power systems in the processes of generation,
         transmission, distribution and utilization.</string>
+    <string name="course_activity_tab_title_attendance">Attendance</string>
+    <string name="course_activity_tab_title_course_list">Course List</string>
+    <string name="error_empty_edit_text">Please enter a value</string>
+    <string name="geofence_transition_notification_text">
+        Click notification to return to app
+    </string>
+    <string name="exit_app_message">Press again to exit</string>
+    <string name="permission_rationale">This app needs access to location to perform this operation</string>
+    <string name="permission_denied_explanation">Location permission denied. Allow in settings</string>
+    <string name="settings">Go to settings</string>
+    <string name="insufficient_permissions">Insufficient permissions</string>
+
+
+    <string name="geofences_added">Geofences added</string>
+    <string name="geofences_removed">Geofences removed</string>
+    <!-- Error strings -->
+    <string name="geofence_not_available">Geofence service is not available now</string>
+    <string name="geofence_too_many_geofences">Your app has registered too many geofences</string>
+    <string name="geofence_too_many_pending_intents">
+        You have provided too many PendingIntents to the addGeofences() call
+    </string>
+    <string name="unknown_geofence_error">
+        Unknown error: the Geofence service is not available now
+    </string>
+    <string name="geofence_transition_invalid_type">
+        Geofence transition error: invalid transition type %1$d
+    </string>
+
+    <!-- Transition type strings -->
+    <string name="geofence_transition_entered">Entered</string>
+    <string name="geofence_transition_exited">Exited</string>
+    <string name="unknown_geofence_transition">Unknown Transition</string>
+
 </resources>

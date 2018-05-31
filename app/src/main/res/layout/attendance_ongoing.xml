@@ -1,54 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<android.support.v7.widget.CardView android:layout_width="match_parent"
+    android:layout_height="350dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingTop="8dp"
-    android:paddingLeft="16dp"
-    android:paddingStart="16dp"
-    android:paddingRight="16dp"
-    android:paddingBottom="16dp">
+    app:cardElevation="8dp"
+    app:cardCornerRadius="8dp"
+    android:layout_margin="8dp"
+    app:cardBackgroundColor="@color/colorPrimary"
 
-
-    <FrameLayout
-        android:id="@+id/attendance_indicator_card"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="4dp"
-        android:elevation="8dp"
-        android:background="#7F6E035D"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteY="4dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Attendance Ongoing"
-            android:textColor="#fff"
-            android:textStyle="bold" />
-    </FrameLayout>
-
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:elevation="8dp"
-        app:cardElevation="8dp"
-        app:cardCornerRadius="8dp"
-        app:cardBackgroundColor="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/attendance_indicator_card"
-        app:layout_constraintStart_toStartOf="parent">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -143,6 +104,3 @@
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>
-
-
-</android.support.constraint.ConstraintLayout>

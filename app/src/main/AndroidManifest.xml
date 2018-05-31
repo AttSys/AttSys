@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.uniben.attsys">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -8,7 +14,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon,android:theme">
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name"
@@ -19,11 +26,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CoursesActivity"
-            android:parentActivityName=".LoginActivity"
-            android:label="Profile">
+        <activity
+            android:name=".CoursesActivity"
+            android:label="Profile"
+            android:parentActivityName=".LoginActivity"/>
 
-        </activity>
+        <activity android:name=".TakeAttendanceActivity" />
+        <activity android:name=".AttendanceActivity" />
+        <activity android:name=".AttendanceTakenActivity" />
+
+
+        <receiver
+            android:name=".geolocation.GeofenceBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service
+            android:name=".geolocation.GeofenceTransitionsJobIntentService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 
 </manifest>

@@ -7,8 +7,8 @@
     tools:context="com.uniben.attsys.LoginActivity">
 
     <ImageView
-        android:id="@+id/att_sys_logo"
-        android:layout_width="400dp"
+        android:id="@+id/img_logo"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="8dp"
@@ -16,17 +16,17 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:adjustViewBounds="true"
-        android:src="@drawable/att_sys"
-        app:layout_constraintBottom_toTopOf="@+id/editText"
+        android:src="@drawable/ic_attendace_system"
+        app:layout_constraintBottom_toTopOf="@+id/edit_username"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="300dp"
+    <android.support.design.widget.TextInputEditText
+        android:id="@+id/edit_username"
+        android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_below="@id/att_sys_logo"
+        android:layout_below="@id/img_logo"
         android:layout_centerInParent="true"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -38,38 +38,38 @@
         android:textColorHint="#fff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/att_sys_logo" />
+        app:layout_constraintTop_toBottomOf="@id/img_logo" />
 
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="300dp"
+    <android.support.design.widget.TextInputEditText
+        android:id="@+id/edit_password"
+        android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_below="@id/att_sys_logo"
+        android:layout_below="@id/img_logo"
         android:layout_centerInParent="true"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:background="@drawable/item_edit_text_background"
+        android:gravity="center"
         android:hint="Password"
-        android:textColorHint="#fff"
         android:inputType="textPassword"
+        android:textColorHint="#fff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_username" />
 
     <Button
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:background="@drawable/item_button_background"
+        android:onClick="dummyLogin"
         android:text="LOGIN"
-        android:textStyle="bold"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
         android:textColor="#fff"
-        android:onClick="dummyLogin"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

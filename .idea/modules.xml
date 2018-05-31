@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AttSys.iml" filepath="$PROJECT_DIR$/AttSys.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/AttSys.iml" filepath="$PROJECT_DIR$/.idea/AttSys.iml" />
+      <module fileurl="file://C:\Users\Cyberman\Downloads\Compressed\AttSys\AttSys.iml" filepath="C:\Users\Cyberman\Downloads\Compressed\AttSys\AttSys.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/swad/swad.iml" filepath="$PROJECT_DIR$/swad/swad.iml" />
     </modules>
   </component>
 </project>
