@@ -93,7 +93,7 @@ public class CoursesActivity extends AppCompatActivity implements AttendanceFrag
 
     private void navigateBack() {
         if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
+            finish();
         }
         this.doubleBackToExitPressedOnce = true;
         NotificationUtils.notifyUser(viewPager, getString(R.string.exit_app_message));
@@ -142,10 +142,10 @@ public class CoursesActivity extends AppCompatActivity implements AttendanceFrag
 
     @Override
     public void onTakeAttendace(Attendance attendance) {
-        NotificationUtils.notifyUser(viewPager, "Attendance section is in development");
+       // NotificationUtils.notifyUser(viewPager, "Attendance section is in development");
 
-       /* Intent intent = new Intent(this, AttendanceActivity.class);
-        intent.putExtra(Constants.STUDENT_KEY, student);
-        startActivity(intent);*/
+        Intent intent = new Intent(this, AttendanceActivity.class);
+        intent.putExtra(Constants.ATTENDANCE_KEY, attendance);
+        startActivity(intent);
     }
 }

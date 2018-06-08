@@ -1,0 +1,50 @@
+{
+  "user": 2,
+  "picture": "https://att-sys-media.s3.amazonaws.com/esan.jpg",
+  "courses": [
+    {
+      "id": 1,
+      "name": "Power and Machines",
+      "code": "EE531",
+      "credits": 0,
+      "description": "",
+      "lecturer_name": "teenoh"
+    },
+    {
+      "id": 2,
+      "name": "Telecommunications",
+      "code": "EEE573",
+      "credits": 0,
+      "description": "",
+      "lecturer_name": "teenoh"
+    },
+    {
+      "id": 3,
+      "name": "Reliability Engineering",
+      "code": "EEE591",
+      "credits": 0,
+      "description": "",
+      "lecturer_name": "teenoh"
+    }
+  ],
+  "ongoing_attendance": [
+    {
+      "id": 1,
+      "name": "Class 1",
+      "course": {
+        "id": 1,
+        "name": "Power and Machines",
+        "code": "EE531",
+        "credits": 0,
+        "description": "",
+        "lecturer_name": "teenoh"
+      },
+      "venue": {
+        "name": "Blocks of Flats",
+        "latitude": 6.4049285,
+        "longitude": 5.6287775,
+        "radius": 20.0
+      }
+    }
+  ]
+}

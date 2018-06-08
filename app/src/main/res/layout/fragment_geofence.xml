@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootview_verifying"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.uniben.attsys.TakeAttendanceActivity">
+
+    <TextView
+        android:id="@+id/tv_hold_on"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="#7F6E035D"
+        android:fontFamily="monospace"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/please_hold_on"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+        android:textColor="#fff"
+        app:layout_constraintBottom_toTopOf="@id/progress_wheel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.todddavies.components.progressbar.ProgressWheel
+        android:id="@+id/progress_wheel"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_hold_on"
+        app:pwBarColor="@color/colorPrimaryDark"
+        app:pwBarLength="25dp"
+        app:pwBarWidth="15dp"
+        app:pwRimColor="@color/colorAccent"
+        app:pwRimWidth="15dp"
+        app:pwText="Verifying Location..."
+        app:pwTextColor="#222"
+        app:pwTextSize="16sp" />
+
+
+
+</android.support.constraint.ConstraintLayout>

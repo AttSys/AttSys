@@ -39,6 +39,9 @@ public class Constants {
      */
     static final HashMap<String, LatLng> BAY_AREA_LANDMARKS = new HashMap<>();
     public static final String STUDENT_KEY = "STUDENT_KEY";
+    public static final String ATTENDANCE_KEY = "ATTENDANCE_KEY";
+    public static final int REQUEST_CHECK_SETTINGS = 1022;
+    public static final int REQUEST_PERMISSIONS_REQUEST_CODE = 122;
 
     static {
         // San Francisco International Airport.

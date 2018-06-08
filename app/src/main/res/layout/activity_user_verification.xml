@@ -1,61 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rootview_verifying"
+
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.uniben.attsys.TakeAttendanceActivity">
+    android:background="#fff"
+    android:visibility="visible" />
 
-    <TextView
-        android:layout_width="353dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="monospace"
-        android:text="Please Hold On"
-        android:padding="8dp"
-        android:gravity="center"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
-        android:textColor="#fff"
-        android:background="#7F6E035D"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/progress_wheel"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <com.todddavies.components.progressbar.ProgressWheel
-        android:id="@+id/progress_wheel"
-        android:layout_width="350dp"
-        android:layout_height="350dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:pwBarColor="@color/colorPrimaryDark"
-        app:pwBarLength="25dp"
-        app:pwBarWidth="15dp"
-        app:pwRimColor="@color/colorAccent"
-        app:pwRimWidth="15dp"
-        app:pwText="Verifying Location..."
-        app:pwTextColor="#222"
-        app:pwTextSize="16sp"
-        />
-
-   <FrameLayout
-       android:id="@+id/fragment_container"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:background="#fff"
-       android:visibility="gone"
-       >
-
-   </FrameLayout>
-
-</android.support.constraint.ConstraintLayout>

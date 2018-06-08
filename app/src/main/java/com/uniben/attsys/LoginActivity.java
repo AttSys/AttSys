@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_activtiy);
         ButterKnife.bind(this);
-        loadingDialog = new LoadingDialog(this, "Validating");
+
         UserViewModel userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
         userViewModel.getUserListLiveData().observe(this, users -> {
 
@@ -67,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void dummyLogin(View view) {
         if (Validations.validateUserData(inputEditTexts)) {
+            loadingDialog = new LoadingDialog(this, "Validating");
             loadingDialog.show();
 
             String username = inputEditTexts.get(0).getText().toString();

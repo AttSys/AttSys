@@ -1,6 +1,8 @@
 package com.uniben.attsys.fragments;
 
 
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.uniben.attsys.R;
 import com.uniben.attsys.adapters.AttendenceListAdapter;
@@ -32,6 +35,9 @@ public class AttendanceFragment extends Fragment implements AttendenceListAdapte
 
     @BindView(R.id.empty_root)
     View noDataView;
+
+    @BindView(R.id.attendance_indicator_card)
+    FrameLayout frameLayout;
 
     private AttendenceListAdapter adapter;
 
@@ -83,6 +89,27 @@ public class AttendanceFragment extends Fragment implements AttendenceListAdapte
     @Override
     public void onTakeAttendace(Attendance attendance) {
         onTakeAttendanceListener.onTakeAttendace(attendance);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        createAnimation();
+    }
+
+
+    private void createAnimation(){
+
+        ObjectAnimator scaleDown = ObjectAnimator.ofPropertyValuesHolder(
+                frameLayout,
+                PropertyValuesHolder.ofFloat("scaleX", 1.2f),
+                PropertyValuesHolder.ofFloat("scaleY", 1.2f));
+        scaleDown.setDuration(310);
+
+        scaleDown.setRepeatCount(ObjectAnimator.INFINITE);
+        scaleDown.setRepeatMode(ObjectAnimator.REVERSE);
+        scaleDown.start();
+
     }
 
     public interface  OnTakeAttendanceListener{
