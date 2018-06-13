@@ -42,5 +42,9 @@
 
 
     <string name="api_key">AIzaSyDG8fNL12zkDSRlpNIFoUXcEG3ohkgJFXU</string>
+    <string name="action_log_out">Log out</string>
+    <string name="log_out_title_text">Alert!</string>
+    <string name="log_out_msg_text">Are you sure you want to log out?</string>
+    <string name="action_test_location">Test location</string>
 
 </resources>

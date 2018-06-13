@@ -7,10 +7,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.uniben.attsys.adapters.ViewPagerAdapter;
 import com.uniben.attsys.api.AttSysApi;
 import com.uniben.attsys.api.ServiceGenerator;
+import com.uniben.attsys.database.DatabaseManger;
 import com.uniben.attsys.dialogs.LoadingDialog;
 import com.uniben.attsys.fragments.AttendanceFragment;
 import com.uniben.attsys.models.Attendance;
@@ -76,6 +79,44 @@ public class CoursesActivity extends AppCompatActivity implements AttendanceFrag
         user = getIntent().getParcelableExtra(Constants.USER_KEY);
 
         getData();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_login_activtiy, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.action_logout){
+            displayConfirmDialog();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void displayConfirmDialog() {
+        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(this);
+        sweetAlertDialog.changeAlertType(SweetAlertDialog.WARNING_TYPE);
+        sweetAlertDialog.setTitleText(getString(R.string.log_out_title_text));
+        sweetAlertDialog.setContentText(getString(R.string.log_out_msg_text));
+        sweetAlertDialog.setConfirmText(getString(android.R.string.ok));
+        sweetAlertDialog.setCancelText(getString(android.R.string.cancel));
+        sweetAlertDialog.setConfirmClickListener(sweetAlertDialog1 -> {
+            logUserOut();
+            sweetAlertDialog1.dismissWithAnimation();
+        });
+        sweetAlertDialog.setCancelClickListener(SweetAlertDialog::dismissWithAnimation);
+        sweetAlertDialog.show();
+    }
+
+    private void logUserOut() {
+        DatabaseManger databaseManger = new DatabaseManger(this);
+        databaseManger.deleteUser(user)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 
     private void getData() {

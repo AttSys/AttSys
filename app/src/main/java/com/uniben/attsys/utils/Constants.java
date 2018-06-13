@@ -42,6 +42,7 @@ public class Constants {
     public static final String ATTENDANCE_KEY = "ATTENDANCE_KEY";
     public static final int REQUEST_CHECK_SETTINGS = 1022;
     public static final int REQUEST_PERMISSIONS_REQUEST_CODE = 122;
+    public static final int PLACE_PICKER_REQUEST = 1234;
 
     static {
         // San Francisco International Airport.

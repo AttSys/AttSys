@@ -1,6 +1,8 @@
 package com.uniben.attsys.fragments;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -12,6 +14,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,14 +25,15 @@ import com.uniben.attsys.AttendanceTakenActivity;
 import com.uniben.attsys.BuildConfig;
 import com.uniben.attsys.R;
 import com.uniben.attsys.geolocation.GeoFencing;
+import com.uniben.attsys.geolocation.GeoFencingIntentService;
 import com.uniben.attsys.geolocation.GeoFencingListener;
-import com.uniben.attsys.geolocation.GeofenceBroadcastReceiver;
 import com.uniben.attsys.models.Attendance;
 import com.uniben.attsys.utils.Constants;
 import com.uniben.attsys.utils.NotificationUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -37,11 +41,11 @@ import static android.app.Activity.RESULT_OK;
  * Created by Cyberman on 6/6/2018.
  */
 
-public class GeoLocationFragment extends Fragment implements GeofenceBroadcastReceiver.OnGeoFenceListener, GeoFencingListener {
+public class GeoLocationFragment extends Fragment implements GeoFencingListener {
     private static final String TAG = "GeoLocationFragment";
     private GeoFencing geoFencing;
-    private GeofenceBroadcastReceiver receiver;
-
+    private GeoLocationReceiver geoLocationReceiver;
+    private IntentFilter intentFilter;
     @BindView(R.id.progress_wheel)
     ProgressWheel progressWheel;
     private Attendance attendance;
@@ -57,10 +61,12 @@ public class GeoLocationFragment extends Fragment implements GeofenceBroadcastRe
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-         attendance = getArguments().getParcelable(TAG);
-
-        receiver = new GeofenceBroadcastReceiver();
-        receiver.setListener(this);
+        attendance = getArguments().getParcelable(TAG);
+        geoLocationReceiver = new GeoLocationReceiver();
+        intentFilter = new IntentFilter();
+        intentFilter.addAction(GeoFencingIntentService.ACTION_ERROR_GEOFENCE);
+        intentFilter.addAction(GeoFencingIntentService.ACTION_WITHIN_GEOFENCE);
+        intentFilter.addAction(GeoFencingIntentService.ACTION_OUTSIDE_GEOFENCE);
         geoFencing = new GeoFencing(getActivity(), attendance.getVenue(), this);
         geoFencing.configureLocationSettings();
     }
@@ -115,10 +121,9 @@ public class GeoLocationFragment extends Fragment implements GeofenceBroadcastRe
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if(requestCode ==Constants.REQUEST_CHECK_SETTINGS && resultCode == RESULT_OK){
+        if (requestCode == Constants.REQUEST_CHECK_SETTINGS && resultCode == RESULT_OK) {
             geoFencing.configureLocationSettings();
-        }else{
+        }  else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
@@ -132,7 +137,7 @@ public class GeoLocationFragment extends Fragment implements GeofenceBroadcastRe
                 Log.i(TAG, "User interaction was cancelled.");
             } else if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Log.i(TAG, "Permission granted.");
-                    geoFencing.configureLocationSettings();
+                geoFencing.configureLocationSettings();
             } else {
 
                 showSnackbar(R.string.permission_denied_explanation, R.string.settings,
@@ -156,7 +161,7 @@ public class GeoLocationFragment extends Fragment implements GeofenceBroadcastRe
     public void onResume() {
         super.onResume();
         progressWheel.startSpinning();
-        getActivity().registerReceiver(receiver, new IntentFilter());
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(geoLocationReceiver, intentFilter);
     }
 
 
@@ -164,7 +169,8 @@ public class GeoLocationFragment extends Fragment implements GeofenceBroadcastRe
     public void onPause() {
         super.onPause();
         progressWheel.stopSpinning();
-        getActivity().unregisterReceiver(receiver);
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(geoLocationReceiver);
+
     }
 
     @Override
@@ -174,17 +180,6 @@ public class GeoLocationFragment extends Fragment implements GeofenceBroadcastRe
         geoFencing = null;
     }
 
-    @Override
-    public void onSuccess(boolean isSucess) {
-        if(isSucess){
-            NotificationUtils.notifyUser(getView(), "Attendance Success");
-            Intent intent = new Intent(getContext(), AttendanceTakenActivity.class);
-            startActivity(intent);
-        }else {
-            NotificationUtils.notifyUser(getView(), "Attendance Failure");
-        }
-
-    }
 
     @Override
     public void onRequestPermission() {
@@ -194,9 +189,9 @@ public class GeoLocationFragment extends Fragment implements GeofenceBroadcastRe
     @Override
     public void onUpdateGeoFence(boolean added) {
         if (getView() != null) {
-            if(added){
+            if (added) {
                 NotificationUtils.notifyUser(getView(), "Confirming location");
-            }else{
+            } else {
                 NotificationUtils.notifyUser(getView(), "Location updates removed");
             }
 
@@ -206,5 +201,39 @@ public class GeoLocationFragment extends Fragment implements GeofenceBroadcastRe
     @Override
     public void onError(String message) {
         NotificationUtils.notifyUser(getView(), message + " try again");
+    }
+
+
+    class GeoLocationReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent != null && intent.getAction() != null) {
+                switch (intent.getAction()) {
+                    case GeoFencingIntentService.ACTION_WITHIN_GEOFENCE:
+                        //user is in class
+
+                        NotificationUtils.notifyUser(getView(), "Attendance Success");
+                        startActivity(new Intent(getContext(), AttendanceTakenActivity.class));
+                        NotificationUtils.notifyUser(getView(), "Attendance Failure");
+
+
+                        break;
+                    case GeoFencingIntentService.ACTION_OUTSIDE_GEOFENCE:
+                        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(getContext());
+                        sweetAlertDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE);
+                        sweetAlertDialog.setContentText("Guy go class! You nor dey class now");
+                        sweetAlertDialog.show();
+
+                        break;
+                    case GeoFencingIntentService.ACTION_ERROR_GEOFENCE:
+                        SweetAlertDialog swad = new SweetAlertDialog(getContext());
+                        swad.changeAlertType(SweetAlertDialog.ERROR_TYPE);
+                        swad.setContentText(intent.getStringExtra(GeoFencingIntentService.MESSAGE_KEY));
+                        swad.show();
+                        break;
+                }
+            }
+        }
     }
 }
