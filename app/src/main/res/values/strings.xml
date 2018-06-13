@@ -40,4 +40,7 @@
     <string name="unknown_geofence_transition">Unknown Transition</string>
     <string name="please_hold_on">Please hold on</string>
 
+
+    <string name="api_key">AIzaSyDG8fNL12zkDSRlpNIFoUXcEG3ohkgJFXU</string>
+
 </resources>

@@ -18,8 +18,8 @@ public class AttendanceActivity extends AppCompatActivity {
     private static final String TAG = AttendanceActivity.class.getSimpleName();
 
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 34;
-    public double LAT = 6.401860;
-    public double LNG = 5.617089;
+    public double LAT = 10.403407;
+    public double LNG = 5.614817;
 
 
     public static final String CURRENT_LOCATION = "6.4021796, 5.6186157 ";
@@ -42,7 +42,7 @@ public class AttendanceActivity extends AppCompatActivity {
                 Attendance attendance = getIntent().getParcelableExtra(Constants.ATTENDANCE_KEY);
                 attendance.getVenue().setLatitude(LAT);
                 attendance.getVenue().setLongitude(LNG);
-                attendance.getVenue().setRadius(1000);
+                attendance.getVenue().setRadius(100);
                 geoLocationFragment =  GeoLocationFragment.newInstance(attendance);
                 ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
                         geoLocationFragment, R.id.fragment_container);

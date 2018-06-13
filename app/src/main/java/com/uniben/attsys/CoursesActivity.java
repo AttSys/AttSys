@@ -71,8 +71,7 @@ public class CoursesActivity extends AppCompatActivity implements AttendanceFrag
                 }
         );
 
-        loadingDialog = new LoadingDialog(this, "Getting Data...");
-        loadingDialog.show();
+
 
         user = getIntent().getParcelableExtra(Constants.USER_KEY);
 
@@ -80,6 +79,8 @@ public class CoursesActivity extends AppCompatActivity implements AttendanceFrag
     }
 
     private void getData() {
+        loadingDialog = new LoadingDialog(this, "Getting Data...");
+        loadingDialog.show();
         AttSysApi attSysApi = ServiceGenerator.createService(AttSysApi.class);
         attSysApi.getStudent("Token " + user.getToken().getToken()).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -117,7 +118,7 @@ public class CoursesActivity extends AppCompatActivity implements AttendanceFrag
                     loadingDialog.setConfirmClickListener(sweetAlertDialog -> {
                         getData();
                     });
-                    NotificationUtils.notifyUser(viewPager, "An error occurred!");
+                    NotificationUtils.notifyUser(viewPager, "An error occurred null student!");
                 }
             }
 
@@ -128,6 +129,7 @@ public class CoursesActivity extends AppCompatActivity implements AttendanceFrag
                 loadingDialog.setConfirmText("Retry");
                 loadingDialog.setConfirmClickListener(sweetAlertDialog -> {
                     getData();
+                    sweetAlertDialog.dismiss();
                 });
                 e.printStackTrace();
                 NotificationUtils.notifyUser(viewPager, "An error occurred!");

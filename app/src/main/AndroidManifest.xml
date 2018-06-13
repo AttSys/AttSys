@@ -38,9 +38,14 @@
         <receiver
             android:name=".geolocation.GeofenceBroadcastReceiver"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="true"
+             />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/api_key" />
 
-
+        <service android:name=".geolocation.GeoFencingIntentService"
+            android:enabled="true" />
     </application>
 
 </manifest>

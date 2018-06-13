@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.todddavies.components.progressbar.ProgressWheel;
+import com.uniben.attsys.AttendanceTakenActivity;
 import com.uniben.attsys.BuildConfig;
 import com.uniben.attsys.R;
 import com.uniben.attsys.geolocation.GeoFencing;
@@ -177,9 +178,12 @@ public class GeoLocationFragment extends Fragment implements GeofenceBroadcastRe
     public void onSuccess(boolean isSucess) {
         if(isSucess){
             NotificationUtils.notifyUser(getView(), "Attendance Success");
+            Intent intent = new Intent(getContext(), AttendanceTakenActivity.class);
+            startActivity(intent);
         }else {
             NotificationUtils.notifyUser(getView(), "Attendance Failure");
         }
+
     }
 
     @Override

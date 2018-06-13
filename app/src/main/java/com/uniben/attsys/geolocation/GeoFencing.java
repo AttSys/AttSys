@@ -49,7 +49,7 @@ public class GeoFencing implements OnCompleteListener<Void> {
     public GeoFencing(Activity context, Venue venue, GeoFencingListener listener) {
         activity = context;
         this.venue = venue;
-        mGeoFencingClient = LocationServices.getGeofencingClient(context);
+        mGeoFencingClient = LocationServices.getGeofencingClient(context.getApplicationContext());
         mGeofencePendingIntent = null;
         this.geoFencingListener = listener;
         mGeofenceList = new ArrayList<>();
@@ -68,7 +68,7 @@ public class GeoFencing implements OnCompleteListener<Void> {
         task.addOnSuccessListener(activity, locationSettingsResponse -> {
             // All location settings are satisfied. The client can initialize
             // location requests here.
-            Log.i(TAG, "onSuccess: ");
+            Log.i(TAG, "onSuccess: Location");
           if(doCheckLocationPermission()) return;
 
             updateGeoFencesList();
@@ -138,7 +138,26 @@ public class GeoFencing implements OnCompleteListener<Void> {
 
         if (doCheckLocationPermission()) return;
 
-        mGeoFencingClient.removeGeofences(getGeofencePendingIntent()).addOnCompleteListener(this);
+        mGeoFencingClient.removeGeofences(getGeofencePendingIntent()).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+
+
+                    int messageId = R.string.geofences_removed;
+
+                    Log.i(TAG, "onComplete: REMOVED" + activity.getString(messageId));
+//            Log.i(TAG, "onComplete: ADDED = " + getGeofencesAdded());
+                    geoFencingListener.onUpdateGeoFence(false);
+
+                } else {
+                    // Get the status code for the error and log it using a user-friendly message.
+                    String errorMessage = GeofenceErrorMessages.getErrorString(activity, task.getException());
+                    geoFencingListener.onError(errorMessage);
+                    Log.w(TAG, errorMessage);
+                }
+            }
+        });
     }
 
 
@@ -157,9 +176,11 @@ public class GeoFencing implements OnCompleteListener<Void> {
                             venue.getLongitude(),
                             venue.getRadius()
                     )
-                    .setExpirationDuration(Constants.GEOFENCE_EXPIRATION_IN_MILLISECONDS)
+                    .setExpirationDuration(Geofence.NEVER_EXPIRE)
+                    .setNotificationResponsiveness(1000)
                     .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
                             Geofence.GEOFENCE_TRANSITION_EXIT).build();
+        Log.i(TAG, "updateGeoFencesList: " + venue.getLatitude() + ", " + venue.getLongitude()+ ". " + venue.getRadius());
             mGeofenceList.add(geofence);
 
     }
@@ -172,7 +193,7 @@ public class GeoFencing implements OnCompleteListener<Void> {
      */
     private GeofencingRequest getGeofencingRequest() {
         GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
-        builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
+        builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER );
         builder.addGeofences(mGeofenceList);
         return builder.build();
     }
@@ -183,8 +204,8 @@ public class GeoFencing implements OnCompleteListener<Void> {
         if (mGeofencePendingIntent != null) {
             return mGeofencePendingIntent;
         }
-        Intent intent = new Intent(activity, GeofenceBroadcastReceiver.class);
-        mGeofencePendingIntent = PendingIntent.getBroadcast(activity, 0, intent, PendingIntent.
+        Intent intent = new Intent(activity, GeoFencingIntentService.class);
+        mGeofencePendingIntent = PendingIntent.getService(activity, 0, intent, PendingIntent.
                 FLAG_UPDATE_CURRENT);
         return mGeofencePendingIntent;
     }
@@ -223,13 +244,13 @@ public class GeoFencing implements OnCompleteListener<Void> {
     @Override
     public void onComplete(@NonNull Task<Void> task) {
         if (task.isSuccessful()) {
-            updateGeofencesAdded(!getGeofencesAdded());
+//            updateGeofencesAdded(!getGeofencesAdded());
 
-            int messageId = getGeofencesAdded() ? R.string.geofences_added :
-                    R.string.geofences_removed;
+            int messageId = R.string.geofences_added;
+
             Log.i(TAG, "onComplete: " + activity.getString(messageId));
-            Log.i(TAG, "onComplete: ADDED = " + getGeofencesAdded());
-            geoFencingListener.onUpdateGeoFence(getGeofencesAdded());
+//            Log.i(TAG, "onComplete: ADDED = " + getGeofencesAdded());
+            geoFencingListener.onUpdateGeoFence(true);
 
         } else {
             // Get the status code for the error and log it using a user-friendly message.
