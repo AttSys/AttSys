@@ -3,7 +3,6 @@ package com.uniben.attsys;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -27,12 +26,13 @@ public class AttendanceActivity extends AppCompatActivity {
     private static final String TAG = AttendanceActivity.class.getSimpleName();
 
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 34;
-    public double LAT = 6.403407;
-    public double LNG = 5.614817;
+    public double LAT = 6.43238250000001;
+    public double LNG = 5.587714843750021;
 
 
     public static final String CURRENT_LOCATION = "6.4021796, 5.6186157 ";
     private Attendance attendance;
+    private GeoLocationFragment geoLocationFragment;
 
 
     @Override
@@ -47,18 +47,15 @@ public class AttendanceActivity extends AppCompatActivity {
 
         initFragment(LAT, LNG);
 
-
-
     }
 
     private void initFragment(double lat, double lng) {
-        GeoLocationFragment geoLocationFragment = (GeoLocationFragment) getSupportFragmentManager()
+        geoLocationFragment = (GeoLocationFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.fragment_container);
         if (geoLocationFragment == null) {
-
-                attendance.getVenue().setLatitude(lat);
+               /* attendance.getVenue().setLatitude(lat);
                 attendance.getVenue().setLongitude(lng);
-                attendance.getVenue().setRadius(100);
+                attendance.getVenue().setRadius(10000);*/
                 geoLocationFragment =  GeoLocationFragment.newInstance(attendance);
                 ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),
                         geoLocationFragment, R.id.fragment_container);
@@ -95,7 +92,7 @@ public class AttendanceActivity extends AppCompatActivity {
         sweetAlertDialog.setConfirmText(getString(android.R.string.ok));
         sweetAlertDialog.setCancelText(getString(android.R.string.cancel));
         sweetAlertDialog.setConfirmClickListener(sweetAlertDialog1 -> {
-//            initTestLocation();
+            initTestLocation();
             sweetAlertDialog1.dismissWithAnimation();
         });
         sweetAlertDialog.setCancelClickListener(SweetAlertDialog::dismissWithAnimation);
@@ -141,8 +138,8 @@ public class AttendanceActivity extends AppCompatActivity {
 
         }else{
             super.onActivityResult(requestCode, resultCode, data);
-           /* getSupportFragmentManager().findFragmentById(R.id.fragment_container)
-                    .onActivityResult(requestCode, resultCode, data);*/
+            getSupportFragmentManager().findFragmentById(R.id.fragment_container)
+                    .onActivityResult(requestCode, resultCode, data);
 
         }
     }
@@ -151,26 +148,23 @@ public class AttendanceActivity extends AppCompatActivity {
         SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(this);
         sweetAlertDialog.changeAlertType(SweetAlertDialog.NORMAL_TYPE);
         sweetAlertDialog.setTitleText("Update class venue");
-        sweetAlertDialog.setContentText("Change class venue to location " + place.getName() +
-                "(" + place.getLatLng().latitude + ", " + place.getLatLng().longitude +")");
+        sweetAlertDialog.setContentText("Change class venue to location " + place.getName());
         sweetAlertDialog.setConfirmText(getString(android.R.string.ok));
         sweetAlertDialog.setCancelText(getString(android.R.string.cancel));
         sweetAlertDialog.setConfirmClickListener(sweetAlertDialog1 -> {
-            resetFragment(place);
+            updateLocation(place);
             sweetAlertDialog1.dismissWithAnimation();
         });
         sweetAlertDialog.setCancelClickListener(SweetAlertDialog::dismissWithAnimation);
         sweetAlertDialog.show();
     }
 
-    private void resetFragment(Place place) {
+    private void updateLocation(Place place) {
         LatLng latLng = place.getLatLng();
-        removeFragment();
-        initFragment(latLng.latitude, latLng.longitude);
+        attendance.getVenue().setLatitude(latLng.latitude);
+        attendance.getVenue().setLongitude(latLng.longitude);
+        attendance.getVenue().setRadius(10000);
+        geoLocationFragment.setAttendance(attendance);
     }
 
-    private void removeFragment() {
-        getSupportFragmentManager().beginTransaction()
-                .remove(getSupportFragmentManager().findFragmentById(R.id.fragment_container));
-    }
 }

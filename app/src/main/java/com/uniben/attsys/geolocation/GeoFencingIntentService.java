@@ -10,7 +10,6 @@ import android.util.Log;
 
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingEvent;
-import com.uniben.attsys.AttendanceTakenActivity;
 import com.uniben.attsys.R;
 
 import java.util.ArrayList;
@@ -52,8 +51,7 @@ public class GeoFencingIntentService extends IntentService {
 //            listener.onSuccess(true);
 
             Log.w(TAG, "onHandleIntent: TRIGGERED "  );
-            Intent i = new Intent(this, AttendanceTakenActivity.class);
-            startActivity(i);
+
             sendBroadCast(ACTION_WITHIN_GEOFENCE, null);
             // Get the geofences that were triggered. A single event can trigger multiple geofences.
             List<Geofence> triggeringGeofences = geofencingEvent.getTriggeringGeofences();

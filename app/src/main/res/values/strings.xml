@@ -5,7 +5,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="dummy_desc">This course analyzes the flow of electrical energy along power systems in the processes of generation,
-        transmission, distribution and utilization.</string>
+        transmission, distribution and utilization. Our calm politics for man is to fear others sincerely. When the individual of shame forgets the trusts of the source, the affirmation will know cow.</string>
     <string name="course_activity_tab_title_attendance">Attendance</string>
     <string name="course_activity_tab_title_course_list">Course List</string>
     <string name="error_empty_edit_text">Please enter a value</string>
@@ -41,10 +41,15 @@
     <string name="please_hold_on">Please hold on</string>
 
 
-    <string name="api_key">AIzaSyDG8fNL12zkDSRlpNIFoUXcEG3ohkgJFXU</string>
+    <string name="api_key">AIzaSyChzvV-qwOJL9hf-lr9v0tRVj6nWCycmLQ</string>
     <string name="action_log_out">Log out</string>
     <string name="log_out_title_text">Alert!</string>
     <string name="log_out_msg_text">Are you sure you want to log out?</string>
     <string name="action_test_location">Test location</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="allow_write_permission">Allow permission</string>
+    <string name="allow_camera_permission">Allow permisson</string>
+    <string name="allow_write_permission_message">Permission to access storage is required to use the facial recognition feature</string>
+    <string name="allow_camera_permission_message">Permisson to access camera is required to use the facial recognition feature</string>
 
 </resources>

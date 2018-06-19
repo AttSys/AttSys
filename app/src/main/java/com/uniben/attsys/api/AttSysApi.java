@@ -33,7 +33,7 @@ public interface AttSysApi {
     @Multipart
     @POST("verify_pic/")
     Observable<FaceRecognitionResponse> verifyPicture(@Header("Authorization") String token,
-                                                      @Part("file") MultipartBody.Part file,
+                                                      @Part MultipartBody.Part file,
                                                       @Part("pk") int id);
 
 }

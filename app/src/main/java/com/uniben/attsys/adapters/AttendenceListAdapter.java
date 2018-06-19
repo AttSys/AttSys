@@ -52,7 +52,7 @@ public class AttendenceListAdapter extends RecyclerView.Adapter<AttendenceListAd
         Attendance attendance = attendanceList.get(position);
         holder.textViews.get(0).setText(attendance.getCourse().getName());
         holder.textViews.get(1).setText(attendance.getCourse().getCode());
-        holder.textViews.get(2).setText(String.valueOf(attendance.getCourse().getCredits()));
+        holder.textViews.get(2).setText(String.format("%s credits", String.valueOf(attendance.getCourse().getCredits())));
         holder.textViews.get(4).setText(String.valueOf(attendance.getCourse().getDescription()));
         holder.takeAttendanceButton.setTag(attendance);
     }

@@ -2,9 +2,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.uniben.attsys.LoginActivity">
+
+
+    <item
+        android:id="@+id/action_refresh"
+        android:orderInCategory="1"
+        android:title="@string/action_refresh"
+        android:icon="@drawable/ic_refresh_24dp"
+        app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/action_logout"
-        android:orderInCategory="1"
+        android:orderInCategory="2"
         android:title="@string/action_log_out"
         android:icon="@drawable/ic_log_out_24dp"
         app:showAsAction="ifRoom" />

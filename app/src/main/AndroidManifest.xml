@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="18" />
 
     <application
         android:allowBackup="true"
@@ -28,24 +30,42 @@
         </activity>
         <activity
             android:name=".CoursesActivity"
-            android:label="Profile" />
-
+            />
         <activity android:name=".TakeAttendanceActivity" />
         <activity android:name=".AttendanceActivity" />
         <activity android:name=".AttendanceTakenActivity" />
 
-
         <receiver
             android:name=".geolocation.GeofenceBroadcastReceiver"
             android:enabled="true"
-            android:exported="true"
-             />
+            android:exported="true" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/api_key" />
 
-        <service android:name=".geolocation.GeoFencingIntentService"
+        <service
+            android:name=".geolocation.GeoFencingIntentService"
             android:enabled="true" />
+
+        <activity android:name=".FacialRecognitionActivity" />
+
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.uniben.attsys.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_path">
+
+            </meta-data>
+        </provider>
+
     </application>
 
 </manifest>

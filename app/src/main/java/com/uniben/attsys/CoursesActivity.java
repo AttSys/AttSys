@@ -21,6 +21,7 @@ import com.uniben.attsys.models.Student;
 import com.uniben.attsys.models.User;
 import com.uniben.attsys.utils.Constants;
 import com.uniben.attsys.utils.NotificationUtils;
+import com.uniben.attsys.views.FlipPageViewTransformer;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import io.reactivex.Observer;
@@ -54,6 +55,7 @@ public class CoursesActivity extends AppCompatActivity implements AttendanceFrag
 
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        viewPager.setPageTransformer(false, new FlipPageViewTransformer());
 
         tabLayout.addOnTabSelectedListener(
                 new TabLayout.OnTabSelectedListener() {
@@ -91,6 +93,9 @@ public class CoursesActivity extends AppCompatActivity implements AttendanceFrag
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.action_logout){
             displayConfirmDialog();
+        }else if(item.getItemId() == R.id.action_refresh){
+            getData();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

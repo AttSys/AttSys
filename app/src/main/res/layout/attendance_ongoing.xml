@@ -2,7 +2,7 @@
 
 
 <android.support.v7.widget.CardView android:layout_width="match_parent"
-    android:layout_height="350dp"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardElevation="8dp"
     app:cardCornerRadius="8dp"
@@ -13,7 +13,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+
             android:padding="8dp"
             >
 
@@ -25,11 +26,14 @@
                 android:textColor="#fff"
                 android:textStyle="bold"
                 android:layout_marginTop="8dp"
-
+                android:layout_alignStart="@+id/course_code"
+                android:layout_toStartOf="@id/week_number"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
                 android:paddingLeft="4dp"
                 android:paddingStart="4dp"
-                android:paddingEnd="4dp"/>
+                android:paddingEnd="4dp"
+                android:layout_toLeftOf="@id/week_number"
+                android:layout_alignLeft="@+id/course_code" />
 
             <TextView
                 android:id="@+id/course_code"
@@ -78,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/course_credit"
-                android:layout_above="@id/take_attendance_btn"
+
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                 android:textColor="#fff"
                 android:layout_marginTop="8dp"
@@ -95,7 +99,7 @@
                 android:elevation="16dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/item_button_background"
-                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/course_description"
                 android:layout_centerHorizontal="true"
                 android:text="Take Attendance"
                 android:textStyle="bold"

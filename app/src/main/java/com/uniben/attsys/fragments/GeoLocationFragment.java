@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,6 +24,7 @@ import android.view.ViewGroup;
 import com.todddavies.components.progressbar.ProgressWheel;
 import com.uniben.attsys.AttendanceTakenActivity;
 import com.uniben.attsys.BuildConfig;
+import com.uniben.attsys.FacialRecognitionActivity;
 import com.uniben.attsys.R;
 import com.uniben.attsys.geolocation.GeoFencing;
 import com.uniben.attsys.geolocation.GeoFencingIntentService;
@@ -68,6 +70,12 @@ public class GeoLocationFragment extends Fragment implements GeoFencingListener 
         intentFilter.addAction(GeoFencingIntentService.ACTION_WITHIN_GEOFENCE);
         intentFilter.addAction(GeoFencingIntentService.ACTION_OUTSIDE_GEOFENCE);
         geoFencing = new GeoFencing(getActivity(), attendance.getVenue(), this);
+        geoFencing.configureLocationSettings();
+    }
+
+
+    public void setAttendance(Attendance attendance) {
+        geoFencing.setVenue(attendance.getVenue());
         geoFencing.configureLocationSettings();
     }
 
@@ -122,7 +130,8 @@ public class GeoLocationFragment extends Fragment implements GeoFencingListener 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Constants.REQUEST_CHECK_SETTINGS && resultCode == RESULT_OK) {
-            geoFencing.configureLocationSettings();
+            //wait two seconds before the next action
+            new Handler().postDelayed(() -> geoFencing.configureLocationSettings(), 2000);
         }  else {
             super.onActivityResult(requestCode, resultCode, data);
         }
@@ -206,31 +215,48 @@ public class GeoLocationFragment extends Fragment implements GeoFencingListener 
 
     class GeoLocationReceiver extends BroadcastReceiver {
 
+        private SweetAlertDialog sweetAlertDialog;
+
+        public GeoLocationReceiver() {
+
+        }
+
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent != null && intent.getAction() != null) {
                 switch (intent.getAction()) {
                     case GeoFencingIntentService.ACTION_WITHIN_GEOFENCE:
                         //user is in class
-
-                        NotificationUtils.notifyUser(getView(), "Attendance Success");
-                        startActivity(new Intent(getContext(), AttendanceTakenActivity.class));
-                        NotificationUtils.notifyUser(getView(), "Attendance Failure");
+                        sweetAlertDialog = new SweetAlertDialog(getContext());
+                        sweetAlertDialog.setTitleText("Alert!");
+                        sweetAlertDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                        sweetAlertDialog.setContentText("You have been verified. Please take your picture in the next screen");
+                        sweetAlertDialog.setConfirmClickListener(sw -> {
+                            Intent i = new Intent(getContext(), FacialRecognitionActivity.class);
+                            i.putExtra(FacialRecognitionActivity.ATTENDACE_KEY, attendance);
+                            startActivity(i);
+                            getActivity().finish();
+                        });
+                        sweetAlertDialog.show();
 
 
                         break;
                     case GeoFencingIntentService.ACTION_OUTSIDE_GEOFENCE:
-                        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(getContext());
+                        sweetAlertDialog = new SweetAlertDialog(getContext());
+                        sweetAlertDialog.setTitleText("Alert!");
                         sweetAlertDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE);
-                        sweetAlertDialog.setContentText("Guy go class! You nor dey class now");
+                        sweetAlertDialog.setContentText("You are not within the classroom. Please go to class");
+                        sweetAlertDialog.setConfirmClickListener(sweetAlertDialog -> GeoLocationFragment.this.getActivity().finish());
                         sweetAlertDialog.show();
 
                         break;
                     case GeoFencingIntentService.ACTION_ERROR_GEOFENCE:
-                        SweetAlertDialog swad = new SweetAlertDialog(getContext());
-                        swad.changeAlertType(SweetAlertDialog.ERROR_TYPE);
-                        swad.setContentText(intent.getStringExtra(GeoFencingIntentService.MESSAGE_KEY));
-                        swad.show();
+                        sweetAlertDialog = new SweetAlertDialog(getContext());
+                        sweetAlertDialog.setTitleText("Alert!");
+                        sweetAlertDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE);
+                        sweetAlertDialog.setContentText(intent.getStringExtra(GeoFencingIntentService.MESSAGE_KEY));
+                        sweetAlertDialog.setConfirmClickListener(sweetAlertDialog -> GeoLocationFragment.this.getActivity().finish());
+                        sweetAlertDialog.show();
                         break;
                 }
             }
